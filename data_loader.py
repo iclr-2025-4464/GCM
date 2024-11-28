@@ -89,7 +89,10 @@ class DataLoader(object):
             y_test = np.float32(np.array([y[i] for i in rnd_id[train_num:]]))
             return x_train, r_train, y_train, x_test, r_test, y_test, 105, 4, 1
         elif name == 'BlogFeedback':
-            with open('resource/blogData_train.csv', newline='') as f:
+            import zipfile
+            with zipfile.ZipFile('resource/blogfeedback.zip', 'r') as zip_ref:
+                zip_ref.extractall('resource/blog')
+            with open('resource/blog/blogData_train.csv', newline='') as f:
                 blog = [i for i in csv.reader(f)]
             X = [[float(j) for j in i[:280]] for i in blog]
             b = [min(i) for i in zip(*X)]
